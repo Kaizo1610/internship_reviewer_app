@@ -1,82 +1,88 @@
+//akim
+
 import 'package:flutter/material.dart';
-import '../widgets/bottom_nav_bar.dart'; 
+import 'profile_screen.dart'; 
 
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavBar(), 
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 40), // Space for status bar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello, Orlando Diggs",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 5),
-                    Text("Find your dream job today!", style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
-                CircleAvatar(
-                  radius: 24,
-                  backgroundImage: AssetImage('lib/assets/images/profile_picture.png'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            // Promo Card
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.deepPurple,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      "50% off take any courses",
-                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                  Text(
+                    "Hello, Orlando Diggs",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  Image.asset('lib/assets/images/course_tutor.png', height: 60),
+                  SizedBox(height: 5),
+                  Text("Find your dream job today!", style: TextStyle(color: Colors.grey)),
                 ],
               ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage('lib/assets/images/profile_picture.png'),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          // Promo Card
+          Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.deepPurple,
+              borderRadius: BorderRadius.circular(12),
             ),
-            SizedBox(height: 20),
-            Text("Find Your Job", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 15),
-            // Job Type Stats
-            Row(
+            child: Row(
               children: [
                 Expanded(
-                  child: _jobStatCard("44.5k", "Remote Job", Colors.blueAccent),
+                  child: Text(
+                    "50% off take any courses",
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: _jobStatCard("66.8k", "Full Time", Colors.purpleAccent),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: _jobStatCard("38.9k", "Part Time", Colors.orangeAccent),
-                ),
+                Image.asset('lib/assets/images/course_tutor.png', height: 60),
               ],
             ),
-            SizedBox(height: 20),
-            Text("Recent Job List", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 15),
-            _jobCard("Product Designer", "Google Inc • California, USA", "\$15K/Month"),
-          ],
-        ),
+          ),
+          SizedBox(height: 20),
+          Text("Find Your Job", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          // Job Type Stats
+          Row(
+            children: [
+              Expanded(
+                child: _jobStatCard("44.5k", "Remote Job", Colors.blueAccent),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: _jobStatCard("66.8k", "Full Time", Colors.purpleAccent),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: _jobStatCard("38.9k", "Part Time", Colors.orangeAccent),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Text("Recent Job List", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          _jobCard("Product Designer", "Google Inc • California, USA", "\$15K/Month"),
+        ],
       ),
     );
   }
