@@ -24,6 +24,7 @@ class InternovaApp extends StatelessWidget {
       ),
       home: const LoadingScreen(),
       routes: {
+        '/loading': (context) => const LoadingScreen(),
         '/splash': (context) => const SplashScreen(),
         '/forum': (context) => ForumPage(),
         '/notifications': (context) => NotificationsPage(),
