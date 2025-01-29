@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:internship_reviewer_app/auth/splash_screen.dart';
 import 'auth/loading_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
+import 'forum/forum_page.dart';
+import 'notification/notifications_page.dart';
+import 'forum/add_post_page.dart';
+import 'forum/edit_post_page.dart';
 
 void main() {
   runApp(const InternovaApp());
@@ -21,6 +25,13 @@ class InternovaApp extends StatelessWidget {
       home: const LoadingScreen(),
       routes: {
         '/splash': (context) => const SplashScreen(),
+        '/forum': (context) => ForumPage(),
+        '/notifications': (context) => NotificationsPage(),
+        '/add_post': (context) => AddPostPage(),
+        '/edit_post': (context) => EditPostPage(
+          postId: ModalRoute.of(context)!.settings.arguments as String,
+          postData: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>,
+        ),
       },
     );
   }
