@@ -9,6 +9,13 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
+  cloud_firestore: ^4.17.5
+  firebase_core: ^2.32.0
+  firebase_auth: ^4.16.0 
+  firebase_storage: ^11.7.7
+  fluttertoast: ^8.0.8
+  image_picker: ^0.8.4+4
+  firebase_messaging: ^14.9.4
   flutter:
     sdk: flutter
 
