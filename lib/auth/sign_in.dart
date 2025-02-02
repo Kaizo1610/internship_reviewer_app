@@ -2,19 +2,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
+import 'package:internship_reviewer_app/auth/splash_screen.dart';
 import 'sign_up.dart';
-import 'splash_screen.dart';
 import 'forgot_password.dart';
+import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
 
 class SignInScreen extends StatefulWidget {
+  SignInScreen({super.key});
+
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  // ...existing code...
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(height: 30),
             Text("Email"),
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 hintText: "Enter your email",
                 border: OutlineInputBorder(),
@@ -64,6 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(height: 20),
             Text("Password"),
             TextField(
+              controller: _passwordController,
               obscureText: _obscurePassword,
               decoration: InputDecoration(
                 hintText: "Enter your password",
@@ -107,11 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 backgroundColor: Colors.deepPurple[900],
                 minimumSize: Size(double.infinity, 50),
               ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DashboardScreen()),
-                );
-              },
+              onPressed: _signIn,
               child: Text("LOGIN", style: TextStyle(color: Colors.white)),
             ),
             SizedBox(height: 10),
@@ -137,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         text: "Sign up",
                         style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()..onTap = () {
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) => SignUpScreen()),
                           );
                         },
@@ -151,5 +159,20 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    try {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => DashboardScreen()),
+      );
+    } catch (e) {
+      // Handle error
+      print(e);
+      // Optionally show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to sign in: $e')),
+      );
+    }
   }
 }

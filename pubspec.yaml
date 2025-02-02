@@ -19,6 +19,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  file_picker: ^7.0.0
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -49,3 +51,9 @@ flutter:
     - lib/assets/images/add_icon.png
     - lib/assets/images/qr_scanner_icon.png
     - lib/assets/images/bookmark_icon.png
+    - lib/assets/images/logo_shell.png
+    - lib/assets/images/logo_bank_negara.png
+    - lib/assets/images/logo_petronas.png
+    - lib/assets/images/logo_slb.png
+    - lib/assets/images/logo_interns.png
+    - lib/assets/images/logo_company.png

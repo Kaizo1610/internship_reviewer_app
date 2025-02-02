@@ -26,6 +26,9 @@ dependencies {
 
 }
 
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.android.application'
+
 android {
     namespace = "com.example.internova"
     compileSdk = flutter.compileSdkVersion
