@@ -82,4 +82,8 @@ class _UploadResumePopupState extends State<UploadResumePopup> {
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe

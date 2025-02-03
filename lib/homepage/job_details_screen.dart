@@ -53,9 +53,16 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
               Center(
                 child: Column(
                   children: [
+<<<<<<< HEAD
                     Image.asset(
                       'lib/assets/images/logo_${widget.company.toLowerCase().replaceAll(' ', '_')}.png',
                       width: 80,
+=======
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.grey.shade200,
+                      child: Icon(Icons.business, size: 50, color: Colors.blue),
+>>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
                     ),
                     SizedBox(height: 8),
                     Text(
@@ -182,4 +189,8 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe

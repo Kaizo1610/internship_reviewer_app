@@ -30,8 +30,8 @@ class SplashScreen extends StatelessWidget {
             Center(
               child: Image.asset(
                 'lib/assets/images/splash_screen.png', 
-                width: 300,
-                height: 400,
+                width: 200,
+                height: 300,
               ),
             ),
             const SizedBox(height: 40),

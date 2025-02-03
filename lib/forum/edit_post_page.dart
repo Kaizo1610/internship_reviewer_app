@@ -38,10 +38,48 @@ class _EditPostPageState extends State<EditPostPage> {
     }
   }
 
+  void _deletePost() async {
+    final confirmation = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete Post'),
+        content: Text('Are you sure you want to delete this post?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmation == true) {
+      await FirebaseFirestore.instance.collection('posts').doc(widget.postId).delete();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Post Deleted Successfully!')),
+      );
+
+      Navigator.pop(context); // Return to the previous screen
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Post')),
+      appBar: AppBar(
+        title: Text('Edit Post'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.red),
+            onPressed: _deletePost,
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -61,9 +99,21 @@ class _EditPostPageState extends State<EditPostPage> {
                 validator: (value) => value!.isEmpty ? 'Enter a description' : null,
               ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _updatePost,
-                child: Text('Update'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: _updatePost,
+                    child: Text('Update'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _deletePost,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: Text('Delete'),
+                  ),
+                ],
               ),
             ],
           ),
