@@ -115,15 +115,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Text("SIGN UP", style: TextStyle(color: Colors.white)),
             ),
             SizedBox(height: 10),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurple[100],
-                minimumSize: Size(double.infinity, 50),
-              ),
-              onPressed: () {},
-              icon: Image.asset('lib/assets/images/logo_google.png', height: 24),
-              label: Text("SIGN UP WITH GOOGLE", style: TextStyle(color: Colors.black)),
-            ),
             SizedBox(height: 20),
             Center(
               child: GestureDetector(

@@ -16,6 +16,7 @@ dependencies:
   fluttertoast: ^8.0.8
   image_picker: ^0.8.4+4
   firebase_messaging: ^14.9.4
+  file_picker: ^4.0.0
   flutter:
     sdk: flutter
 
@@ -49,3 +50,7 @@ flutter:
     - lib/assets/images/add_icon.png
     - lib/assets/images/qr_scanner_icon.png
     - lib/assets/images/bookmark_icon.png
+    - lib/assets/images/logo_slb.png
+    - lib/assets/images/logo_petronas.png
+    - lib/assets/images/logo_shell.png
+    - lib/assets/images/logo_bank_negara.png
