@@ -15,21 +15,7 @@ class ForumPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Forum'),
-<<<<<<< HEAD
         automaticallyImplyLeading: false,
-=======
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationsPage()),
-              );
-            },
-          ),
-        ],
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

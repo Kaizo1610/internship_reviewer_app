@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'job_details_screen.dart'; // Ensure this import is present
-=======
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
 
 class JobSearchScreen extends StatefulWidget {
   final String category;
@@ -44,7 +41,6 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
       "jobType": "Hybrid",
       "salary": 5500,
       "logo": "lib/assets/images/logo_bank_negara.png"
-<<<<<<< HEAD
     },
     {
       "title": "Data Analyst",
@@ -53,8 +49,6 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
       "jobType": "Remote",
       "salary": 6000,
       "logo": "lib/assets/images/logo_slb.png"
-=======
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
     }
   ];
 
@@ -137,7 +131,6 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
                 itemCount: filteredJobs.length,
                 itemBuilder: (context, index) {
                   var job = filteredJobs[index];
-<<<<<<< HEAD
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -161,15 +154,6 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
                         subtitle: Text("${job["company"]} • ${job["location"]}"),
                         trailing: Text("\$${job["salary"]}/Mo"),
                       ),
-=======
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: ListTile(
-                      leading: Image.asset(job["logo"], width: 40),
-                      title: Text(job["title"]),
-                      subtitle: Text("${job["company"]} • ${job["location"]}"),
-                      trailing: Text("\$${job["salary"]}/Mo"),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
                     ),
                   );
                 },
@@ -246,8 +230,4 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
       },
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:internship_reviewer_app/forum/forum_page.dart';
 import 'package:internship_reviewer_app/forum/add_post_page.dart';
-=======
-import 'package:internship_reviewer_app/forum/display_forum.dart';
-import 'package:internship_reviewer_app/posting/add_posting.dart';
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
 import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
 import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 import 'job_details_screen.dart'; 
@@ -147,11 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               company: "Petronas",
               location: "Kuala Lumpur, Malaysia",
               salary: "\$12K/Mo",
-<<<<<<< HEAD
               tags: ["3D Designer Intern", "Remote"],
-=======
-              tags: ["3D Designer intern", "Remote"],
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
               logo: "lib/assets/images/logo_petronas.png",
             ),
             SizedBox(height: 10),
@@ -160,7 +151,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               title: "Data Scientist intern",
               company: "SLB",
               location: "Petaling Jaya, Malaysia",
-<<<<<<< HEAD
               salary: "\$15K/Mo",
               tags: ["Data Scientist Intern", "Hybrid"],
               logo: "lib/assets/images/logo_slb.png",
@@ -175,12 +165,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               tags: ["Mobile App Developer Intern", "Physical"],
               logo: "lib/assets/images/logo_bank_negara.png",
             ),
-=======
-              salary: "\$16K/Mo",
-              tags: ["Data Scientist intern", "Hybrid"],
-              logo: "lib/assets/images/logo_slb.png",
-            ),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
           ],
         ),
       ),
@@ -204,21 +188,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             case 1:
               Navigator.push(
                 context,
-<<<<<<< HEAD
                 MaterialPageRoute(builder: (context) => ForumPage()),
-=======
-                MaterialPageRoute(builder: (context) => DisplayForum()),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
               );
               break;
             case 2:
               Navigator.push(
                 context,
-<<<<<<< HEAD
                 MaterialPageRoute(builder: (context) => AddPostPage()),
-=======
-                MaterialPageRoute(builder: (context) => AddPosting()),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
               );
               break;
             case 3:

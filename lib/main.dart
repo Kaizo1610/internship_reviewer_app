@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:firebase_core/firebase_core.dart';
 import 'package:internship_reviewer_app/auth/splash_screen.dart';
 import 'auth/loading_screen.dart';
@@ -15,12 +14,6 @@ void main() async {
   } catch (e) {
     debugPrint("Firebase initialization error: $e");
   }
-=======
-import 'auth/loading_screen.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
   runApp(const InternovaApp());
 }
 
@@ -36,7 +29,6 @@ class InternovaApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: const LoadingScreen(),
-<<<<<<< HEAD
       routes: {
         '/loading': (context) => const LoadingScreen(),
         '/splash': (context) => const SplashScreen(),
@@ -48,13 +40,7 @@ class InternovaApp extends StatelessWidget {
           postData: (ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>)['postData'] as Map<String, dynamic>,
         ),
       },
-=======
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
     );
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe

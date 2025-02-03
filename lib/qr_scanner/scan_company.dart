@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
-<<<<<<< HEAD
 import 'package:internship_reviewer_app/forum/forum_page.dart';
 import 'package:internship_reviewer_app/forum/add_post_page.dart';
-=======
-import 'package:internship_reviewer_app/forum/display_forum.dart';
-import 'package:internship_reviewer_app/posting/add_posting.dart';
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
 import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 
 class ScanCompany extends StatelessWidget {
@@ -40,21 +35,13 @@ class ScanCompany extends StatelessWidget {
             case 1:
               Navigator.push(
                 context,
-<<<<<<< HEAD
                 MaterialPageRoute(builder: (context) => ForumPage()),
-=======
-                MaterialPageRoute(builder: (context) => DisplayForum()),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
               );
               break;
             case 2:
               Navigator.push(
                 context,
-<<<<<<< HEAD
                 MaterialPageRoute(builder: (context) => AddPostPage()),
-=======
-                MaterialPageRoute(builder: (context) => AddPosting()),
->>>>>>> 5e53e47b3982f517de964b538adfdcdfb18df0fe
               );
               break;
             case 3:
