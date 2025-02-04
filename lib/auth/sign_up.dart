@@ -5,9 +5,10 @@ import 'package:flutter/gestures.dart';
 import 'sign_in.dart';
 import 'forgot_password.dart';
 import 'package:internship_reviewer_app/homepage/dashboard_screen.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -19,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -26,14 +28,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _signUp() async {
-    try {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => DashboardScreen()),
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+    String name = _nameController.text.trim();
+
+    if (email.isEmpty || password.isEmpty || name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
       );
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = userCredential.user;
+      if (user != null) {
+        // Store additional user information if needed
+        // For example, you can use Firestore to store user details
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+      }
     } catch (e) {
-      // Handle error
-      print(e);
-      // Optionally show an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to sign up: $e')),
       );
@@ -49,12 +68,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
+            const Center(
               child: Column(
                 children: [
                   Text(
@@ -70,32 +89,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 30),
-            Text("Full Name"),
+            const SizedBox(height: 30),
+            const Text("Full Name"),
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter your full name",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 30),
-            Text("Email"),
+            const SizedBox(height: 30),
+            const Text("Email"),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter your email",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
-            Text("Password"),
+            const SizedBox(height: 20),
+            const Text("Password"),
             TextField(
               controller: _passwordController,
               obscureText: _obscurePassword,
               decoration: InputDecoration(
                 hintText: "Enter your password",
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
                   onPressed: () {
@@ -119,41 +138,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                     ),
-                    Text("Remember me"),
+                    const Text("Remember me"),
                   ],
                 ),
                 TextButton(onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
                 );
-                }, child: Text("Forgot Password?")),
+                }, child: const Text("Forgot Password?")),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple[900],
-                minimumSize: Size(double.infinity, 50),
+                minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: _signUp,
-              child: Text("SIGN UP", style: TextStyle(color: Colors.white)),
+              child: const Text("SIGN UP", style: TextStyle(color: Colors.white)),
             ),
-            SizedBox(height: 10),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Center(
               child: GestureDetector(
                 onTap: () {},
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     children: [
-                      TextSpan(text: "Already have an account? "),
+                      const TextSpan(text: "Already have an account? "),
                       TextSpan(
                         text: "Sign in",
                         style: TextStyle(color: Colors.deepPurple[900], fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()..onTap = () {
                           Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => SignInScreen()),
+                            MaterialPageRoute(builder: (context) => const SignInScreen()),
                           );
                         },
                       ),

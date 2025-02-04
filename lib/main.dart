@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:internship_reviewer_app/auth/splash_screen.dart';
-import 'auth/loading_screen.dart';
-import 'forum/forum_page.dart';
-import 'notification/notifications_page.dart';
-import 'forum/add_post_page.dart';
-import 'forum/edit_post_page.dart';
+import 'package:internship_reviewer_app/auth/loading_screen.dart';
+import 'package:internship_reviewer_app/forum/forum_page.dart';
+import 'package:internship_reviewer_app/notification/notifications_page.dart';
+import 'package:internship_reviewer_app/forum/add_post_page.dart';
+import 'package:internship_reviewer_app/forum/edit_post_page.dart';
+import 'firebase_options.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   try {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   } catch (e) {
     debugPrint("Firebase initialization error: $e");
   }
+
   runApp(const InternovaApp());
 }
 
@@ -43,4 +48,3 @@ class InternovaApp extends StatelessWidget {
     );
   }
 }
-
