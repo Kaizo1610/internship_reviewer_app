@@ -46,8 +46,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
       User? user = userCredential.user;
       if (user != null) {
-        // Store additional user information if needed
-        // For example, you can use Firestore to store user details
+        await user.sendEmailVerification();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Verification email sent. Please check your inbox.')),
+        );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => DashboardScreen()),
         );

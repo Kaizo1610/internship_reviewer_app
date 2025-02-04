@@ -4,7 +4,7 @@ import 'package:internship_reviewer_app/forum/add_post_page.dart';
 import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
 import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 import 'job_details_screen.dart'; 
-import 'profile_screen.dart';
+import 'package:internship_reviewer_app/Profile/profile_page.dart';
 import 'job_search_screen.dart'; 
 
 class DashboardScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
+                MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
             child: CircleAvatar(

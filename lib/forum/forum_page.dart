@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
-import 'add_post_page.dart';
-import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
-import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../notification/notifications_page.dart';
@@ -15,7 +11,17 @@ class ForumPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Forum'),
-        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -44,11 +50,11 @@ class ForumPage extends StatelessWidget {
                   children: [
                     ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: data['profilePic'] != null && data['profilePic'].isNotEmpty
+                        backgroundImage: (data['profilePic'] ?? "").isNotEmpty
                             ? NetworkImage(data['profilePic'])
                             : null,
-                        child: data['profilePic'] == null || data['profilePic'].isEmpty
-                            ? Text(data['author'][0].toUpperCase())
+                        child: (data['profilePic'] ?? "").isEmpty
+                            ? Text((data['author'] ?? "?")[0].toUpperCase())
                             : null,
                       ),
                       title: Text(data['title'] ?? 'No Title', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -63,10 +69,16 @@ class ForumPage extends StatelessWidget {
                       ),
                     ),
 
-                    if (data['imageUrl'] != null && data['imageUrl'].isNotEmpty)
+                    // ✅ Image Handling Fix
+                    if (data.containsKey('imageUrl') && (data['imageUrl'] ?? "").isNotEmpty)
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Image.network(data['imageUrl'], height: 250, width: double.infinity, fit: BoxFit.cover),
+                        child: Image.network(
+                          data['imageUrl'],
+                          height: 250,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
 
                     Padding(
@@ -89,54 +101,10 @@ class ForumPage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: "Home", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.forum, color: Colors.white), label: "Forum", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.add, color: Colors.white), label: "Add Post", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code, color: Colors.white), label: "Scan Company", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmarks, color: Colors.white), label: "Bookmarks", backgroundColor: Colors.deepPurple),
-        ],
-        currentIndex: 1,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DashboardScreen()),
-              );
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ForumPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddPostPage()),
-              );
-              break;
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ScanCompany()),
-              );
-              break;
-            case 4:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Bookmarks()),
-              );
-              break;
-          }
-        },
-      ),
     );
   }
 
-  Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic> data) {
+Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic> data) {
     String currentUserId = _auth.currentUser?.uid ?? "";
 
     return StreamBuilder<DocumentSnapshot>(
@@ -144,7 +112,7 @@ class ForumPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Icon(Icons.favorite_border);
 
-        var postData = snapshot.data!.data() as Map<String, dynamic>;
+        var postData = snapshot.data!.data() as Map<String, dynamic>? ?? {};
         List<dynamic> likes = postData['likes'] ?? [];
         bool isLiked = likes.contains(currentUserId);
 
@@ -170,7 +138,7 @@ class ForumPage extends StatelessWidget {
     );
   }
 
-  void _showComments(BuildContext context, String postId) {
+void _showComments(BuildContext context, String postId) {
     TextEditingController commentController = TextEditingController();
     showModalBottomSheet(
       context: context,
@@ -201,11 +169,11 @@ class ForumPage extends StatelessWidget {
                         var commentData = doc.data() as Map<String, dynamic>;
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: commentData['profilePic'] != null
+                            backgroundImage: (commentData['profilePic'] ?? "").isNotEmpty
                                 ? NetworkImage(commentData['profilePic'])
                                 : null,
-                            child: commentData['profilePic'] == null
-                                ? Text(commentData['author'][0].toUpperCase())
+                            child: (commentData['profilePic'] ?? "").isEmpty
+                                ? Text((commentData['author'] ?? "?")[0].toUpperCase())
                                 : null,
                           ),
                           title: Text(commentData['author'] ?? "Anonymous"),
@@ -243,7 +211,7 @@ class ForumPage extends StatelessWidget {
     );
   }
 
-  void _addComment(String postId, String commentText) {
+void _addComment(String postId, String commentText) {
     if (commentText.trim().isEmpty) return;
 
     String currentUserId = _auth.currentUser?.uid ?? "";
@@ -257,9 +225,8 @@ class ForumPage extends StatelessWidget {
       'timestamp': FieldValue.serverTimestamp(),
     });
 
-    // Notify the post owner
     FirebaseFirestore.instance.collection('posts').doc(postId).get().then((postSnapshot) {
-      var postData = postSnapshot.data() as Map<String, dynamic>;
+      var postData = postSnapshot.data() as Map<String, dynamic>? ?? {};
       _sendNotification(postData['authorId'], "New Comment", "Someone commented on your post.");
     });
   }

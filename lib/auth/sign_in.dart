@@ -172,13 +172,19 @@ class _SignInScreenState extends State<SignInScreen> {
       User? user = userCredential.user;
 
       if (user != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
+        if (user.emailVerified) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please verify your email before signing in.')),
+          );
+        }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid credentials. Please try again.')),
+        const SnackBar(content: Text('Invalid credentials. Please try again.')),
       );
     }
   }
