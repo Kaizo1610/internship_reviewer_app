@@ -15,12 +15,25 @@ class _EditPostPageState extends State<EditPostPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
+  String? _selectedCompany;
+
+  final List<String> companies = [
+    "Petronas",
+    "Bank Negara Malaysia (BNM)",
+    "Tenaga Nasional Berhad (TNB)",
+    "Telekom Malaysia (TM)",
+    "Malaysia Airlines (MAG)",
+    "Proton",
+    "AirAsia",
+    "KPJ Healthcare Berhad",
+  ];
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.postData['title']);
     _descriptionController = TextEditingController(text: widget.postData['description']);
+    _selectedCompany = widget.postData['company'];
   }
 
   void _updatePost() async {
@@ -28,6 +41,7 @@ class _EditPostPageState extends State<EditPostPage> {
       await FirebaseFirestore.instance.collection('posts').doc(widget.postId).update({
         'title': _titleController.text,
         'description': _descriptionController.text,
+        'company': _selectedCompany,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -68,7 +82,7 @@ class _EditPostPageState extends State<EditPostPage> {
     }
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -92,6 +106,22 @@ class _EditPostPageState extends State<EditPostPage> {
                 validator: (value) => value!.isEmpty ? 'Enter a title' : null,
               ),
               SizedBox(height: 16),
+              
+              DropdownButtonFormField(
+                decoration: InputDecoration(labelText: 'Select Company'),
+                value: _selectedCompany,
+                items: companies.map((company) {
+                  return DropdownMenuItem(value: company, child: Text(company));
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCompany = value as String?;
+                  });
+                },
+                validator: (value) => value == null ? 'Select a company' : null,
+              ),
+              SizedBox(height: 16),
+
               TextFormField(
                 controller: _descriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
@@ -99,6 +129,7 @@ class _EditPostPageState extends State<EditPostPage> {
                 validator: (value) => value!.isEmpty ? 'Enter a description' : null,
               ),
               SizedBox(height: 16),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
