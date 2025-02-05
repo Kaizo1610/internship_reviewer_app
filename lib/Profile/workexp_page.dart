@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkExperiencePage extends StatefulWidget {
   final Map<String, dynamic>? workExperience;
@@ -116,7 +118,7 @@ class _WorkExperiencePageState extends State<WorkExperiencePage> {
     });
   }
 
-  void _saveChanges() {
+  void _saveChanges() async {
     if (_formKey.currentState!.validate()) {
       final workExperience = {
         'jobTitle': _jobTitleController.text,
@@ -127,6 +129,12 @@ class _WorkExperiencePageState extends State<WorkExperiencePage> {
         'isCurrentPosition': _isCurrentPosition,
         'duration': _duration,
       };
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+          'workExperience': workExperience,
+        });
+      }
       Navigator.pop(context, workExperience);
     }
   }

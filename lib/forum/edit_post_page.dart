@@ -82,6 +82,7 @@ class _EditPostPageState extends State<EditPostPage> {
     }
   }
 
+
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,28 +95,38 @@ class _EditPostPageState extends State<EditPostPage> {
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView( // Added for scrollability
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch form fields
             children: [
               TextFormField(
                 controller: _titleController,
-                decoration: InputDecoration(labelText: 'Post Title'),
-                validator: (value) => value!.isEmpty ? 'Enter a title' : null,
+                decoration: InputDecoration(
+                  labelText: 'Job Position*', // Changed to Job Position
+                  border: OutlineInputBorder(), // Added border
+                ),
+                validator: (value) => value!.isEmpty ? 'Enter a job position' : null, // Updated validation message
               ),
               SizedBox(height: 16),
-              
-              DropdownButtonFormField(
-                decoration: InputDecoration(labelText: 'Select Company'),
+
+              DropdownButtonFormField<String>( // Explicitly typed DropdownButtonFormField
+                decoration: InputDecoration(
+                  labelText: 'Company*', // Changed to Company
+                  border: OutlineInputBorder(), // Added border
+                ),
                 value: _selectedCompany,
                 items: companies.map((company) {
-                  return DropdownMenuItem(value: company, child: Text(company));
+                  return DropdownMenuItem<String>( // Explicitly typed DropdownMenuItem
+                    value: company,
+                    child: Text(company),
+                  );
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    _selectedCompany = value as String?;
+                    _selectedCompany = value;
                   });
                 },
                 validator: (value) => value == null ? 'Select a company' : null,
@@ -124,27 +135,31 @@ class _EditPostPageState extends State<EditPostPage> {
 
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                  labelText: 'Description*', // Changed to Description
+                  border: OutlineInputBorder(), // Added border
+                ),
                 maxLines: 4,
                 validator: (value) => value!.isEmpty ? 'Enter a description' : null,
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 24), // Increased spacing
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: _updatePost,
-                    child: Text('Update'),
-                  ),
-                  ElevatedButton(
-                    onPressed: _deletePost,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: Text('Delete'),
-                  ),
-                ],
+              ElevatedButton(
+                onPressed: _updatePost,
+                style: ElevatedButton.styleFrom( // Improved button styling
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text('Update', style: TextStyle(fontSize: 16)),
+              ),
+              SizedBox(height: 16), // Added spacing
+
+              ElevatedButton(
+                onPressed: _deletePost,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Red color
+                  padding: EdgeInsets.symmetric(vertical: 16), // Improved button styling
+                ),
+                child: Text('Delete', style: TextStyle(fontSize: 16)),
               ),
             ],
           ),

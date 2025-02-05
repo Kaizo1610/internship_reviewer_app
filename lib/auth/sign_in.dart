@@ -7,6 +7,8 @@ import 'forgot_password.dart';
 import 'sign_up.dart';
 import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:internship_reviewer_app/company/homepage_company.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -21,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -173,9 +176,18 @@ class _SignInScreenState extends State<SignInScreen> {
 
       if (user != null) {
         if (user.emailVerified) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
-          );
+          DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+          String userType = userDoc['userType'];
+
+          if (userType == 'interns') {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DashboardScreen()),
+            );
+          } else if (userType == 'company') {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomepageCompany()),
+            );
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Please verify your email before signing in.')),

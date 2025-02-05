@@ -6,6 +6,8 @@ import 'sign_in.dart';
 import 'forgot_password.dart';
 import 'package:internship_reviewer_app/homepage/dashboard_screen.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:internship_reviewer_app/company/homepage_company.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,6 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String? selectedUserType;
 
   @override
   void initState() {
@@ -39,6 +43,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
+    if (selectedUserType == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a user type')),
+      );
+      return;
+    }
+
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -50,9 +61,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Verification email sent. Please check your inbox.')),
         );
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
+
+        await _firestore.collection('users').doc(user.uid).set({
+          'name': name,
+          'email': email,
+          'userType': selectedUserType, // Save user type to Firestore
+        });
+
+        if (selectedUserType == 'interns') {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
+          );
+        } else if (selectedUserType == 'company') {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomepageCompany()),
+          );
+        }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -127,6 +151,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+            const Text("User Type"),
+            DropdownButtonFormField<String>(
+              value: selectedUserType,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedUserType = newValue;
+                });
+              },
+              items: const [
+                DropdownMenuItem(value: 'interns', child: Text('Interns')),
+                DropdownMenuItem(value: 'company', child: Text('Company')),
+              ],
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'job_details_screen.dart'; // Ensure this import is present
+import 'job_details_screen.dart'; 
 
 class JobSearchScreen extends StatefulWidget {
   final String category;
@@ -19,36 +19,44 @@ class _JobSearchScreenState extends State<JobSearchScreen> {
 
   List<Map<String, dynamic>> jobs = [
     {
-      "title": "UI/UX Designer",
-      "company": "Shell",
-      "location": "Petaling Jaya, Malaysia",
-      "jobType": "Remote",
-      "salary": 7000,
-      "logo": "lib/assets/images/logo_shell.png"
-    },
-    {
-      "title": "Lead Designer",
+      "title": "Control Audit Intern",
       "company": "Petronas",
       "location": "Kuala Lumpur, Malaysia",
       "jobType": "Physical",
-      "salary": 6000,
+      "salary": 4000,
       "logo": "lib/assets/images/logo_petronas.png"
     },
     {
-      "title": "Software Engineer",
-      "company": "Bank Negara Malaysia",
+      "title": "Data Scientist Intern",
+      "company": "SLB",
       "location": "Kuala Lumpur, Malaysia",
-      "jobType": "Hybrid",
-      "salary": 5500,
-      "logo": "lib/assets/images/logo_bank_negara.png"
+      "jobType": "Remote",
+      "salary": 7000,
+      "logo": "lib/assets/images/logo_slb.png"
     },
     {
-      "title": "Data Analyst",
+      "title": "3D Designer Intern",
+      "company": "SLB",
+      "location": "Kuala Lumpur, Malaysia",
+      "jobType": "Physical",
+      "salary": 4000,
+      "logo": "lib/assets/images/logo_slb.png"
+    },
+    {
+      "title": "Data Analyst Intern",
       "company": "SLB",
       "location": "Petaling Jaya, Malaysia",
-      "jobType": "Remote",
-      "salary": 6000,
+      "jobType": "Hybrid",
+      "salary": 3000,
       "logo": "lib/assets/images/logo_slb.png"
+    },
+    {
+      "title": "Database Administrator",
+      "company": "Shell",
+      "location": "Johor Bahru, Malaysia",
+      "jobType": "Hybrid",
+      "salary": 5000,
+      "logo": "lib/assets/images/logo_shell.png"
     }
   ];
 

@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../notification/notifications_page.dart';
 import 'edit_post_page.dart';
 import 'add_post_page.dart';
-import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
 import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
 import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 
@@ -42,7 +41,7 @@ class ForumPage extends StatelessWidget {
             return const Center(child: Text('No posts available.'));
           }
 
-          return ListView.builder(
+return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var post = snapshot.data!.docs[index];
@@ -90,7 +89,8 @@ class ForumPage extends StatelessWidget {
                             )
                           : null,
                     ),
-                    Padding(
+
+Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +115,6 @@ class ForumPage extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: "Home", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.forum, color: Colors.white), label: "Forum", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.add, color: Colors.white), label: "Add Post", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code, color: Colors.white), label: "Scan Company", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.bookmarks, color: Colors.white), label: "Bookmarks", backgroundColor: Colors.deepPurple),
         ],
         currentIndex: 1,
@@ -142,12 +141,6 @@ class ForumPage extends StatelessWidget {
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ScanCompany()),
-              );
-              break;
-            case 4:
-              Navigator.push(
-                context,
                 MaterialPageRoute(builder: (context) => Bookmarks()),
               );
               break;
@@ -159,7 +152,6 @@ class ForumPage extends StatelessWidget {
 
 Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic> data) {
   String currentUserId = _auth.currentUser?.uid ?? "";
-
   return StreamBuilder<DocumentSnapshot>(
     stream: FirebaseFirestore.instance.collection('posts').doc(postId).snapshots(),
     builder: (context, snapshot) {
@@ -194,7 +186,7 @@ Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic
 }
 
 
-  void _showComments(BuildContext context, String postId) {
+void _showComments(BuildContext context, String postId) {
     TextEditingController commentController = TextEditingController();
     showModalBottomSheet(
       context: context,
@@ -250,7 +242,8 @@ Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic
                   },
                 ),
               ),
-              Padding(
+
+Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
@@ -297,7 +290,7 @@ Widget _buildLikeButton(BuildContext context, String postId, Map<String, dynamic
     });
   }
 
-  void _deleteComment(String postId, String commentId) {
+void _deleteComment(String postId, String commentId) {
     FirebaseFirestore.instance.collection('posts').doc(postId).collection('comments').doc(commentId).delete();
   }
 

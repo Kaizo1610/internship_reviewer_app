@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LanguagePage extends StatefulWidget {
   final List<Map<String, dynamic>>? initialLanguages;
@@ -39,7 +41,13 @@ class _LanguagePageState extends State<LanguagePage> {
     });
   }
 
-  void _saveChanges() {
+  void _saveChanges() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'languages': _languages,
+      });
+    }
     Navigator.pop(context, _languages);
   }
 

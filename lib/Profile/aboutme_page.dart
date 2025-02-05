@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AboutMePage extends StatefulWidget {
   final String initialContent;
@@ -100,6 +102,17 @@ class _AboutMePageState extends State<AboutMePage> {
     return true; // No changes, allow exit
   }
 
+  void _saveChanges() async {
+    String aboutMeContent = _aboutMeController.text;
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'aboutMe': aboutMeContent,
+      });
+    }
+    Navigator.pop(context, aboutMeContent);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -142,9 +155,7 @@ class _AboutMePageState extends State<AboutMePage> {
                 width: double.infinity, // Make the button full width
                 height: 50, // Increase the height of the button
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context, _aboutMeController.text);
-                  },
+                  onPressed: _saveChanges,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple, // Button color
                     foregroundColor: Colors.white, // Text color

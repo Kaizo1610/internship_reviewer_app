@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:internship_reviewer_app/forum/forum_page.dart';
 import 'package:internship_reviewer_app/forum/add_post_page.dart';
-import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
 import 'package:internship_reviewer_app/save_job/bookmarks.dart';
 import 'job_details_screen.dart'; 
 import 'package:internship_reviewer_app/Profile/profile_page.dart';
 import 'job_search_screen.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,6 +15,45 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   List<int> bookmarkedIndices = [];
+  String username = '';
+  int physicalJobCount = 0;
+  int remoteJobCount = 0;
+  int hybridJobCount = 0;
+  List<Map<String, dynamic>> jobs = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsername();
+    _fetchJobs();
+  }
+
+  Future<void> _fetchUsername() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      setState(() {
+        username = userDoc['name'];
+      });
+    }
+  }
+
+  Future<void> _fetchJobs() async {
+    QuerySnapshot jobSnapshot = await FirebaseFirestore.instance.collection('jobs').get();
+    List<Map<String, dynamic>> fetchedJobs = jobSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    setState(() {
+      jobs = fetchedJobs;
+      _countJobCategories();
+    });
+  }
+
+  void _countJobCategories() {
+    setState(() {
+      physicalJobCount = jobs.where((job) => job['jobMode'] == 'Physical').length;
+      remoteJobCount = jobs.where((job) => job['jobMode'] == 'Remote').length;
+      hybridJobCount = jobs.where((job) => job['jobMode'] == 'Hybrid').length;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +63,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: const Text(
-          "Hello Aiman Akim,",
-          style: TextStyle(
+        title: Text(
+          "Hello $username,",
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -64,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Scan Your Dream Company Logo Now!!",
+                        "Share your internship experience with us!!",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 17,
@@ -76,7 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ScanCompany()),
+                            MaterialPageRoute(builder: (context) => AddPostPage()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -85,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
                         ),
-                        child: Text("Scan Now"), 
+                        child: const Text("Add Post Now"), 
                       ),
                     ],
                   ),
@@ -110,9 +150,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround, 
               children: [
-                _jobCategoryCard("Physical Job", "5", Colors.lightBlue, Icons.work_outline, "Physical"),
-                _jobCategoryCard("Remote Job", "3", Colors.purpleAccent, Icons.laptop, "Remote"),
-                _jobCategoryCard("Hybrid Job", "2", Colors.orangeAccent, Icons.phone, "Hybrid"),
+                _jobCategoryCard("Physical Job", physicalJobCount.toString(), Colors.lightBlue, Icons.work_outline, "Physical"),
+                _jobCategoryCard("Remote Job", remoteJobCount.toString(), Colors.purpleAccent, Icons.laptop, "Remote"),
+                _jobCategoryCard("Hybrid Job", hybridJobCount.toString(), Colors.orangeAccent, Icons.phone, "Hybrid"),
               ],
             ),
 
@@ -124,47 +164,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             SizedBox(height: 10),
-            _jobCard(
-              index: 0,
-              title: "Data Analyst Intern",
-              company: "Shell",
-              location: "Kuala Lumpur, Malaysia",
-              salary: "\$11K/Mo",
-              tags: ["Data Analyst Intern", "Physical"],
-              logo: "lib/assets/images/logo_shell.png",
-            ),
-            SizedBox(height: 10),
-            _jobCard(
-              index: 1,
-              title: "3D Designer intern",
-              company: "Petronas",
-              location: "Kuala Lumpur, Malaysia",
-              salary: "\$12K/Mo",
-              tags: ["3D Designer Intern", "Remote"],
-              logo: "lib/assets/images/logo_petronas.png",
-            ),
-            SizedBox(height: 10),
-            _jobCard(
-              index: 2,
-              title: "Data Scientist intern",
-              company: "SLB",
-              location: "Petaling Jaya, Malaysia",
-              salary: "\$15K/Mo",
-              tags: ["Data Scientist Intern", "Hybrid"],
-              logo: "lib/assets/images/logo_slb.png",
-            ),
-            SizedBox(height: 10),
-            _jobCard(
-              index: 3,
-              title: "Mobile App Developer intern",
-              company: "Bank Negara",
-              location: "Kuala Lumpur, Malaysia",
-              salary: "\$13K/Mo",
-              tags: ["Mobile App Developer Intern", "Physical"],
-              logo: "lib/assets/images/logo_bank_negara.png",
-            ),
+            ...jobs.asMap().entries.map((entry) {
+              int index = entry.key;
+              Map<String, dynamic> job = entry.value;
+              return Column(
+                children: [
+                  _jobCard(
+                    index: index,
+                    title: job['title'],
+                    company: job['company'],
+                    location: job['location'],
+                    salary: job['salary'],
+                    tags: [job['jobMode']],
+                    companyLogo: 'lib/assets/images/logo_${job['company'].toLowerCase().replaceAll(' ', '_')}.png',
+                  ),
+                  SizedBox(height: 10),
+                ],
+              );
+            }).toList(),
           ],
         ),
       ),
@@ -173,7 +191,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: "Home", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.forum, color: Colors.white), label: "Forum", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.add, color: Colors.white), label: "Add Post", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code, color: Colors.white), label: "Scan Company", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.bookmarks, color: Colors.white), label: "Bookmarks", backgroundColor: Colors.deepPurple),
         ],
         currentIndex: 0,
@@ -198,12 +215,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               );
               break;
             case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ScanCompany()),
-              );
-              break;
-            case 4:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Bookmarks()),
@@ -253,7 +264,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _jobCard({required int index, required String title, required String company, required String location, required String salary, required List<String> tags, required String logo}) {
+  Widget _jobCard({required int index, required String title, required String company, required String location, required String salary, required List<String> tags, required String companyLogo}) {
     return Container(
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.symmetric(vertical: 8),
@@ -272,7 +283,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Row(
             children: [
-              Image.asset(logo, width: 40),
+              Image.asset(
+                companyLogo,
+                width: 40,
+              ), // Replaced Icon with Image.asset
               SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

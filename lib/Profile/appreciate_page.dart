@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AppreciationPage extends StatefulWidget {
   final List<Map<String, dynamic>>? initialAppreciations;
@@ -91,7 +93,13 @@ class _AppreciationPageState extends State<AppreciationPage> {
     }
   }
 
-  void _saveChanges() {
+  void _saveChanges() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'appreciations': _appreciations,
+      });
+    }
     Navigator.pop(context, _appreciations);
   }
 

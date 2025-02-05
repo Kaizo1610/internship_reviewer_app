@@ -3,7 +3,6 @@ import 'package:internship_reviewer_app/homepage/dashboard_screen.dart';
 import 'package:internship_reviewer_app/forum/forum_page.dart';
 import 'package:internship_reviewer_app/homepage/job_search_screen.dart';
 import 'package:internship_reviewer_app/forum/add_post_page.dart';
-import 'package:internship_reviewer_app/qr_scanner/scan_company.dart';
 
 class Bookmarks extends StatelessWidget {
   @override
@@ -82,10 +81,9 @@ class Bookmarks extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.white), label: "Home", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.forum, color: Colors.white), label: "Forum", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.add, color: Colors.white), label: "Add Post", backgroundColor: Colors.deepPurple),
-          BottomNavigationBarItem(icon: Icon(Icons.qr_code, color: Colors.white), label: "Scan Company", backgroundColor: Colors.deepPurple),
           BottomNavigationBarItem(icon: Icon(Icons.bookmarks, color: Colors.white), label: "Bookmarks", backgroundColor: Colors.deepPurple),
         ],
-        currentIndex: 4,
+        currentIndex: 3,
         onTap: (index) {
           switch (index) {
             case 0:
@@ -107,12 +105,6 @@ class Bookmarks extends StatelessWidget {
               );
               break;
             case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ScanCompany()),
-              );
-              break;
-            case 4:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Bookmarks()),

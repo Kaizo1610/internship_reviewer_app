@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SkillPage extends StatefulWidget {
   final List<String>? initialSkills;
@@ -51,8 +53,13 @@ class _SkillPageState extends State<SkillPage> {
     });
   }
 
-  void _saveChanges() {
-    // Navigate back with the updated skills
+  void _saveChanges() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'skills': _selectedSkills,
+      });
+    }
     Navigator.pop(context, _selectedSkills);
   }
 

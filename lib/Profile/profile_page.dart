@@ -8,6 +8,8 @@ import 'appreciate_page.dart'; // Import the AppreciationPage
 import 'lang_page.dart'; // Import the LanguagePage
 import 'resume_page.dart'; // Import the ResumePage
 import 'setting_page.dart'; // Import the SettingsPage
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String aboutMeContent =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus id commodo egestas metus interdum dolor.';
+      'Add your details here!';
   Map<String, dynamic>? workExperience;
   Map<String, dynamic>? education;
   List<String> skills = [
@@ -58,6 +60,39 @@ class _ProfilePageState extends State<ProfilePage> {
     },
   ];
   Map<String, dynamic>? resume; // Added resume variable
+  String username = ''; // Initialize username as an empty string
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsername(); // Fetch username when the widget is initialized
+  }
+
+  Future<void> _fetchUsername() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+        if (userDoc.exists) {
+          setState(() {
+            username = userDoc['name']; // Fetch the name field from Firestore
+          });
+        } else {
+          setState(() {
+            username = 'User document does not exist';
+          });
+        }
+      } else {
+        setState(() {
+          username = 'No user is currently signed in';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        username = 'Error fetching username: $e';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,28 +150,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     backgroundImage: AssetImage('lib/assets/images/madd.png'),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Orlando Diges',
-                    style: TextStyle(
+                  Text(
+                    username.isEmpty ? 'Loading...' : '$username', // Use string interpolation
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   const Text(
-                    'California, USA',
+                    'IIUM, Gombak',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      _buildHeaderIcon(Icons.people, '120k Followers'),
-                      const SizedBox(width: 20),
-                      _buildHeaderIcon(Icons.person_add, '23k Following'),
-                    ],
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
@@ -178,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
               title: 'Work experience',
               icon: Icons.work,
               content: workExperience == null
-                  ? 'No work experience added'
+                  ? 'Add your experience here'
                   : '${workExperience!['jobTitle']}\n${workExperience!['company']}\n${workExperience!['startDate']} - ${workExperience!['endDate']} • ${workExperience!['duration']}',
               onEdit: () async {
                 final updatedWorkExperience = await Navigator.push(
@@ -202,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
               title: 'Education',
               icon: Icons.school,
               content: education == null
-                  ? 'No education added'
+                  ? 'Add your education here'
                   : '${education!['levelOfEducation']}\n${education!['institutionName']}\n${education!['fieldOfStudy']}\n${education!['startDate']} - ${education!['endDate']} • ${education!['duration']}',
               onEdit: () async {
                 final updatedEducation = await Navigator.push(
@@ -264,7 +291,7 @@ class _ProfilePageState extends State<ProfilePage> {
               title: 'Appreciation',
               icon: Icons.emoji_events,
               content: appreciations.isEmpty
-                  ? 'No appreciations added'
+                  ? 'Add your appreciation here'
                   : appreciations.map((appreciation) {
                       return '${appreciation['awardName']}\n${appreciation['category']} • ${appreciation['year']}';
                     }).join('\n\n'),
@@ -466,7 +493,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         if (resume == null)
           const Text(
-            'No resume added',
+            'Add your resume here',
             style: TextStyle(fontSize: 16, color: Colors.black87), //tryd
           ),
       ],

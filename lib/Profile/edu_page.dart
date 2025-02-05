@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class EduPage extends StatefulWidget {
   final Map<String, dynamic>? education;
@@ -145,7 +147,7 @@ class _EduPageState extends State<EduPage> {
     print('Undo Changes Applied. Current Data: $_originalData'); // Debugging line
   }
 
-  void _saveChanges() {
+  void _saveChanges() async {
     if (_formKey.currentState!.validate()) {
       final education = {
         'levelOfEducation': _levelOfEducation,
@@ -155,8 +157,14 @@ class _EduPageState extends State<EduPage> {
         'endDate': _endDateController.text,
         'description': _description,
         'isCurrentPosition': _isCurrentPosition,
-        'duration': _duration, // Add the duration to the returned data
+        'duration': _duration,
       };
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+          'education': education,
+        });
+      }
       Navigator.pop(context, education);
     }
   }
