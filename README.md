@@ -6,12 +6,12 @@ This project is a mobile application developed using Flutter, designed to help s
 
 |                    Name                   |    Matric Number     |                                          Tasks                                                                             |
 |-------------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------|                                 
-|      MOHAMAD AIMAN AKIM BIN ADANAN        |       2113823        |             Complete the title, background problem, app compatibility screen navigation flow, Gantt chart, and references  |
-|            MUHAMMAD BIN ABAS              |       2113201        |                        Complete the objective, target user, sequence diagram, and references                               |
-|       ARIF MUQRI BIN AHMAD NAZIRI         |       2113825        |             Complete the preferred platform, features/functionalities, technical feasibility, and references               |
+|      MOHAMAD AIMAN AKIM BIN ADANAN        |       2113823        |             Complete the title, background problem, app compatibility screen navigation flow, Gantt chart, develop authentication and Homepage(Intern and Company) and references  |
+|            MUHAMMAD BIN ABAS              |       2113201        |                        Complete the objective, target user, sequence diagram, develop profile, settings and bookmark page and references                                |
+|       ARIF MUQRI BIN AHMAD NAZIRI         |       2113825        |             Complete the preferred platform, features/functionalities, technical feasibility, develop notifications, forum and add post page and references |
 
 
-# Case Study 1
+# Group Project
 ## Project Initiation
 
 **1. Title:**
@@ -38,7 +38,33 @@ The purpose of INTERNOVA is to improve the internship experience for both intern
    A standardized evaluation system is used for all interns to ensure consistency and fairness in assessments.  
 
 4. **Tracking Progress:**  
-   A progress dashboard helps interns and employers monitor completed tasks, achievements, and skill development in real-time.  
+   A progress dashboard helps interns and employers monitor completed tasks, achievements, and skill development in real time.  
+
+---
+# Weekly Progress Report
+
+## Group Name: TRIPLE A
+
+| Week | Date       | Name                            | Plans                                                                 | Progress                                                                                                                                  | Problems                                | Signature   |
+|------|------------|---------------------------------|----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|-------------|
+| 9    | 10/12/2024 | Mohamad Aiman Akim Bin Adanan  | Complete the title, background problem, Gantt chart, and references  | The title, background problem, Gantt chart, and references are completed and have been put on the readMe GitHub                         | No Problems encountered                 | Aiman       |
+| 9    | 12/12/2024 | Arif Muqri Bin Ahmad Naziri    | Complete the preferred platform, features/functionalities, and references | The preferred platform, features/functionalities, and references are completed and have been put on the readMe GitHub                  | No Problems encountered                 | Arif        |
+| 9    | 13/12/2024 | Muhammad Bin Abas              | Complete the objective, target user, and references                  | The objective, target user, and references are completed and have been put on the readMe GitHub                                         | No Problems encountered                 | Muhammad    |
+| 10   | 19/12/2024 | Mohamad Aiman Akim Bin Adanan  | Complete the app compatibility, screen navigation flow, and references | The app compatibility, screen navigation flow, and references are completed and have been put on the readMe GitHub                     | No Problems encountered                 | Aiman       |
+| 10   | 18/12/2024 | Arif Muqri Bin Ahmad Naziri    | Complete the technical feasibility and references                    | The technical feasibility and references are completed and have been put on the readMe GitHub                                           | No Problems encountered                 | Arif        |
+| 10   | 20/12/2024 | Muhammad Bin Abas              | Complete the sequence diagram and references                         | The sequence diagram and references are completed and have been put on the readMe GitHub                                                | No Problems encountered                 | Muhammad    |
+| 14   | 17/1/2025  | Mohamad Aiman Akim Bin Adanan  | Begin development and setting up Firebase configurations. Distribute pages for development | Firebase has been configured and integrated into the Flutter Framework. Pages for development are distributed evenly                | Integrating Firebase took a stall in progress. | Aiman       |
+| 14   | 18/1/2025  | Arif Muqri Bin Ahmad Naziri    | Begin the initial development for the forum page, add a post page and notifications page | Started the User Interface for the three pages and collected data for input.                                                          | No Problems encountered                 | Arif        |
+| 14   | 18/12/2025 | Muhammad Bin Abas              | Begin the initial development of the profile page, bookmarks page and settings page | Started the User Interface for the three pages without integrating the back end yet.                                                  | No Problems encountered                 | Muhammad    |
+| 15   | 24/1/2025  | Mohamad Aiman Akim Bin Adanan  | Begin the initial development for the registration page, login page, and dashboard page | Started the User Interface for the three pages along with the authentication feature for page navigation based on the user’s role. | No Problems encountered                 | Aiman       |
+| 15   | 25/1/2025  | Arif Muqri Bin Ahmad Naziri    | Integrate the back-end into the existing front-end via Firebase       | Managed to integrate the three pages with Firebase according to the correct data collection.                                            | Some outputs are not as intended due to database collection confusion. | Arif        |
+| 15   | 26/12/2025 | Muhammad Bin Abas              | Integrate the back-end into the existing front-end via Firebase       | Firebase is integrated so that the edited profile and settings are saved in the database.                                              | No Problems encountered                 | Muhammad    |
+| 16   | 31/1/2025  | Mohamad Aiman Akim Bin Adanan  | Integrate the dashboard page to sync between the company and interns based on updates | Any updates committed by the company can be viewed on the interns' dashboard.                                                          | No Problems encountered                 | Aiman       |
+| 16   | 1/2/2025   | Arif Muqri Bin Ahmad Naziri    | Add comments functionality, enhance notifications, and allow users to edit posts on the forum | Users are notified of interactions, can delete posts, and other users can comment or like posts on the forum.                          | No problems were encountered after declaring user authentication privileges. | Arif        |
+| 16   | 2/3/2025   | Muhammad Bin Abas              | Adjust the profile page for better appearance and add data to Firebase | Users can add details to their profile page and ensure that all their details are uploaded into the database.                          | The resume cannot be uploaded to Firebase. | Muhammad    |
+| 16   | 5/2/2025   | Mohamad Aiman Akim Bin Adanan  | Merge branches into main and debug complexities                      | Branches are merged into main, and complexities inflicted were attempted to be fixed before the change of platforms.                   | Merging branches into main inflicted issues, hence moved to another platform channel to transfer codes. | Aiman       |
+| 16   | 4/2/2025   | Arif Muqri Bin Ahmad Naziri    | Review and correct functionalities for each page                     | Intended functionalities worked well                                                                                                   | No Problems encountered                 | Arif        |
+| 16   | 3/3/2025   | Muhammad Bin Abas              | Review and correct functionalities for each page                     | Intended functionalities worked well                                                                                                   | No Problems encountered                 | Muhammad    |
 
 ---
 
