@@ -11,7 +11,7 @@ This project is a mobile application developed using Flutter, designed to help s
 |       ARIF MUQRI BIN AHMAD NAZIRI         |       2113825        |             Complete the preferred platform, features/functionalities, technical feasibility, and references               |
 
 
-# Case Study 1
+# Group Project
 ## Project Initiation
 
 **1. Title:**
