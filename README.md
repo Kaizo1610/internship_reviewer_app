@@ -6,9 +6,9 @@ This project is a mobile application developed using Flutter, designed to help s
 
 |                    Name                   |    Matric Number     |                                          Tasks                                                                             |
 |-------------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------|                                 
-|      MOHAMAD AIMAN AKIM BIN ADANAN        |       2113823        |             Complete the title, background problem, app compatibility screen navigation flow, Gantt chart, and references  |
-|            MUHAMMAD BIN ABAS              |       2113201        |                        Complete the objective, target user, sequence diagram, and references                               |
-|       ARIF MUQRI BIN AHMAD NAZIRI         |       2113825        |             Complete the preferred platform, features/functionalities, technical feasibility, and references               |
+|      MOHAMAD AIMAN AKIM BIN ADANAN        |       2113823        |             Complete the title, background problem, app compatibility screen navigation flow, Gantt chart, develop authentication and Homepage(Intern and Company) and references  |
+|            MUHAMMAD BIN ABAS              |       2113201        |                        Complete the objective, target user, sequence diagram, develop profile, settings and bookmark page and references                                |
+|       ARIF MUQRI BIN AHMAD NAZIRI         |       2113825        |             Complete the preferred platform, features/functionalities, technical feasibility, develop notifications, forum and add post page and references |
 
 
 # Group Project
